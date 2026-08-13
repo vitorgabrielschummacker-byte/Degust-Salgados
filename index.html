@@ -138,7 +138,7 @@
       padding: 14px 20px;
       border: 3px solid #fff;
       border-radius: 16px;
-      background: rgba(92, 11, 11, .94);
+      background: var(--orange);
       color: #fff;
       text-decoration: none;
       font-size: clamp(16px, 2.2vw, 21px);
@@ -146,13 +146,73 @@
       letter-spacing: .4px;
       box-shadow: 0 8px 20px rgba(0,0,0,.25);
       transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      animation: ctaPulse 2.8s ease-in-out infinite;
       -webkit-tap-highlight-color: transparent;
     }
 
+    .order-btn::after {
+      content: "";
+      position: absolute;
+      top: -60%;
+      left: -75%;
+      width: 42%;
+      height: 220%;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255,255,255,0) 25%,
+        rgba(255,255,255,.95) 50%,
+        rgba(255,255,255,0) 75%,
+        transparent 100%
+      );
+      transform: skewX(-18deg);
+      pointer-events: none;
+      z-index: -1;
+      animation: ctaShine 4.2s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+
+    .order-btn > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .order-btn:hover {
-      transform: translateY(-2px);
-      background: #7b1111;
-      box-shadow: 0 12px 26px rgba(0,0,0,.32);
+      transform: translateY(-2px) scale(1.015);
+      background: #e58b2d;
+      box-shadow: 0 12px 28px rgba(215,127,38,.42);
+    }
+
+    @keyframes ctaPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 20px rgba(0,0,0,.25);
+      }
+      50% {
+        transform: scale(1.018);
+        box-shadow: 0 11px 26px rgba(215,127,38,.38);
+      }
+    }
+
+    @keyframes ctaShine {
+      0%, 52% {
+        left: -75%;
+        opacity: 0;
+      }
+      60% {
+        opacity: 1;
+      }
+      72% {
+        left: 135%;
+        opacity: 0;
+      }
+      100% {
+        left: 135%;
+        opacity: 0;
+      }
     }
 
     .order-btn:active { transform: translateY(0); }
@@ -198,7 +258,13 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .carousel { scroll-behavior: auto; }
-      .order-btn { transition: none; }
+      .order-btn {
+        transition: none;
+        animation: none;
+      }
+      .order-btn::after {
+        animation: none;
+      }
     }
   </style>
 </head>
